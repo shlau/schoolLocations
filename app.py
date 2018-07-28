@@ -23,10 +23,14 @@ for query in searchQueries:
     """     print("query is : %s" % query) """
     encodedQuery = urllib.parse.quote(query)
     formatted = searchText % (encodedQuery, API_KEY)
-    """     print("formatted is : %s" % formatted)  """
+    print("formatted is : %s" % formatted)  
     result = requests.get(formatted)
     parsed_json = json.loads(result.content)
     """     print(parsed_json['candidates'][0]['formatted_address']) """
     """     print(parsed_json['predictions'][0]['structured_formatting']['secondary_text']) """
-    address = parsed_json['candidates'][0]['formatted_address']
+    if (parsed_json['status'] == 'OK'):
+        address = parsed_json['candidates'][0]['formatted_address']
+    else:
+        address = 'NO ADDRESS FOUND FOR %s' % query
     f.write("%s\n" % address)
+f.close()
