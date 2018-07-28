@@ -17,17 +17,16 @@ for i in range(len(schools)):
     searchQueries.append(schools[i] + ' ' + districts[i])
 
 """ places API call to get location of schools """
-search = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%s&types=establishment&location=32.7153300,-117.1572600&radius=500&key=%s"
 searchText = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%s&inputtype=textquery&fields=formatted_address&key=%s"
-locations = []
+f = open("addresses.txt","w+")
 for query in searchQueries:
-    print("query is : %s" % query)
+    """     print("query is : %s" % query) """
     encodedQuery = urllib.parse.quote(query)
     formatted = searchText % (encodedQuery, API_KEY)
-    print("formatted is : %s" % formatted) 
+    """     print("formatted is : %s" % formatted)  """
     result = requests.get(formatted)
     parsed_json = json.loads(result.content)
-    print(parsed_json['candidates'][0]['formatted_address'])
-"""     print(parsed_json['predictions'][0]['structured_formatting']['secondary_text']) """
-
-
+    """     print(parsed_json['candidates'][0]['formatted_address']) """
+    """     print(parsed_json['predictions'][0]['structured_formatting']['secondary_text']) """
+    address = parsed_json['candidates'][0]['formatted_address']
+    f.write("%s\n" % address)
