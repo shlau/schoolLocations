@@ -23,7 +23,7 @@ for query in searchQueries:
     """     print("query is : %s" % query) """
     encodedQuery = urllib.parse.quote(query)
     formatted = searchText % (encodedQuery, API_KEY)
-    print("formatted is : %s" % formatted)  
+    """     print("formatted is : %s" % formatted)   """
     result = requests.get(formatted)
     parsed_json = json.loads(result.content)
     """     print(parsed_json['candidates'][0]['formatted_address']) """
