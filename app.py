@@ -21,10 +21,13 @@ locations = []
 searchText = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=%s&inputtype=textquery&fields=formatted_address&key=%s"
 """ f = open("addresses.txt","w+") """
 for query in searchQueries:
-    encodedQuery = urllib.parse.quote(query)
+    try:
+        encodedQuery = urllib.parse.quote(query)
+    except: 
+        encodedQuery = urllib.quote_plus(query)
     formatted = searchText % (encodedQuery, API_KEY)
     result = requests.get(formatted)
-    parsed_json = json.loads(result.content)
+    parsed_json = json.loads(result.content.decode('utf-8'))
 
     if (parsed_json['status'] == 'OK'):
         address = parsed_json['candidates'][0]['formatted_address']
