@@ -14,7 +14,7 @@ searchQueries = []
 schools = df['School']
 districts = df['District']
 for i in range(len(schools)):
-    searchQueries.append(schools[i] + ' ' + districts[i])
+    searchQueries.append(schools[i] + ',' + districts[i])
 
 locations = []
 """ places API call to get location of schools """
